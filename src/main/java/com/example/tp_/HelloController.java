@@ -4,23 +4,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Light;
-import javafx.scene.input.InputEvent;
 import javafx.scene.layout.AnchorPane;
+import javax.swing.AbstractButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.robot.Robot;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -37,19 +38,19 @@ public class HelloController implements Initializable  {
     @FXML Label Best_src;
     @FXML Label Best_src_ingame;
     @FXML Label case_actuel_txt;
-
      String[] jouer_infos;
-       Button[] button= new Button[100];
+    Button[] button= new Button[100];
     static int rool_resu;
      static int case_actuel=1;
+   private  int position_in_file;
     boolean jouer_existe_deja ;
     Plateau plateau= new Plateau_jeu();
      boolean case_clicked=true;
      PopOver popOver=new PopOver();
+     int previous_Case;    // ce int pour connaintre la case avant , elle sera util quand le jouer suspendre la partie sans cliquer sur la case distination
 
 
-   public void Read_jouer (){
-
+   public void Read_jouer (boolean continue_partie){
             try {
                 File myObj = new File("src/main/java/com/example/tp_/Jouers.txt"); // la lecture de fichier
                 Scanner myReader = new Scanner(myObj);
@@ -59,12 +60,22 @@ public class HelloController implements Initializable  {
                     if(jouer_infos[0].equalsIgnoreCase(HelloApplication.jouer_nom)){
                         jouer_existe_deja=true;
                         player_name.setText("Player's name : \n "+jouer_infos[0]);
-                        Current_score.setText(jouer_infos[1]);
-                        Best_src.setText(jouer_infos[2]);
+                        if (continue_partie){ // ici on fait la diference entre le jouer qui a suspendu la partie ou non
+                            Best_src.setText(jouer_infos[2]);
+                            case_actuel=Integer.parseInt(jouer_infos[3]);
+                            Current_score.setText(jouer_infos[1]);
+                            case_actuel_txt.setText(String.valueOf(case_actuel));
+                        }
+                        else{
+                            Current_score.setText("0");
+                            Best_src.setText(jouer_infos[1]);
+                        }
+
                         myjouer=new Joueur(jouer_infos[0],Integer.parseInt(jouer_infos[1]),Integer.parseInt(jouer_infos[2]));
                         myReader.close();
                         return; // parceque on veut pas lire la suite de le fichier
                         }
+                    position_in_file++;
                 }
                 myjouer=new Joueur(HelloApplication.jouer_nom,0,0);
                     player_name.setText("Player's name : \n "+HelloApplication.jouer_nom);
@@ -154,39 +165,23 @@ public class HelloController implements Initializable  {
        }
 
    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Read_jouer();
-        Creat_cases();
-        plateau.init_plateau();
-        Set_ButtonsEvents();
-
-        HelloApplication.mystage.setOnCloseRequest(we -> {
-            System.out.println("jouer_info_written");
-            write_jouer();
-        });
-
-    }
-
-    public void Dice_action()   {
-
+    public void Dice_action() {
+        previous_Case=case_actuel;
             System.out.println(case_clicked);
             if(case_clicked){ // on verifie que la case est clique
                 rool_resu= myjouer.lance_des();
                  case_actuel=rool_resu+case_actuel;
                  if(case_actuel==100) return;
-                if(case_actuel>100){
-                    case_actuel=100-(case_actuel-100);
-                }
+                if(case_actuel>100) case_actuel=100-(case_actuel-100);
                 case_destination.setText(String.valueOf(case_actuel));
              case_clicked=false;
              Roll_result.setText("Dice's result : \n"+rool_resu);
          }
-            System.out.println(case_clicked);
-    }
 
+    }
     public void Set_ButtonsEvents(){
+
+
 
             button[0].setStyle("-fx-background-radius: 15; -fx-border-color:black ;" +
                 "-fx-border-radius:15;-fx-background-color: #fce303");
@@ -207,20 +202,24 @@ public class HelloController implements Initializable  {
                            } );
                            button[i].setStyle("-fx-background-radius: 15; -fx-border-color:black ;" +
                                    "-fx-border-radius:15;-fx-background-color: #00baba");
+
                            button[i].setOnAction(actionEvent -> {
                                if(j+1==case_actuel) {
                                    popOver.setTitle("Case parcours");
                                    Label l = new Label("Case parcours");
+                                   l.setFont(Font.font("System", FontWeight.BOLD,14));
                                    HBox hBox = new HBox();
                                    hBox.getChildren().add(l);
                                    popOver.setContentNode(hBox);
                                    popOver.show(button[j]);
-                                   popOver.setFadeInDuration(Duration.millis(300));
+                                   popOver.setFadeOutDuration(Duration.millis(100));
+
                                    case_clicked = true;
                                    case_actuel=Plateau_jeu.cases[j].mouvement(case_actuel);
                                    if(!Plateau_jeu.cases[case_actuel-1].getCouleur().equalsIgnoreCase("BLANCHE"))
-                                       case_actuel=Plateau_jeu.cases[case_actuel-1].mouvement(case_actuel);
-                                       case_actuel_txt.setText(String.valueOf(case_actuel));
+                                               case_actuel=Plateau_jeu.cases[case_actuel-1].mouvement(case_actuel);
+                                   case_actuel_txt.setText(String.valueOf(case_actuel));
+
 
 
                                }});
@@ -243,11 +242,12 @@ public class HelloController implements Initializable  {
                                    popOver.setHeight(50);
                                    popOver.setWidth(100);
                                    Label l = new Label("Case Malus :\n Vous etes recule de 2 cases");
+                                   l.setFont(Font.font("System", FontWeight.BOLD,14));
                                    HBox hBox = new HBox();
                                    hBox.getChildren().add(l);
                                    popOver.setContentNode(hBox);
                                    popOver.show(button[j]);
-                                   popOver.setFadeInDuration(Duration.millis(300));
+                                   popOver.setFadeOutDuration(Duration.millis(300));
                                    case_clicked = true;
                                    case_actuel=Plateau_jeu.cases[j].mouvement(case_actuel);
                                    if(!Plateau_jeu.cases[case_actuel-1].getCouleur().equalsIgnoreCase("BLANCHE"))
@@ -303,13 +303,14 @@ public class HelloController implements Initializable  {
                                    case_clicked = true;
                                    popOver.setTitle("Case Bonus");
                                    popOver.setHeight(50);
-                                   popOver.setWidth(100);
+                                   popOver.setWidth(200);
                                    Label l = new Label("Case Bonus :\n Vous etes avance de 2 cases");
+                                   l.setFont(Font.font("System", FontWeight.BOLD,14));
                                    HBox hBox = new HBox();
                                    hBox.getChildren().add(l);
                                    popOver.setContentNode(hBox);
                                    popOver.show(button[j]);
-                                   popOver.setFadeInDuration(Duration.millis(300));
+                                   popOver.setFadeOutDuration(Duration.millis(300));
                                    case_actuel=Plateau_jeu.cases[j].mouvement(case_actuel);
                                    if(!Plateau_jeu.cases[case_actuel-1].getCouleur().equalsIgnoreCase("BLANCHE"))
                                        case_actuel=Plateau_jeu.cases[case_actuel-1].mouvement(case_actuel);
@@ -385,26 +386,108 @@ public class HelloController implements Initializable  {
 
             } // TO DO :
     public void write_jouer(){
-        FileWriter fileWriter;
+      /*  FileWriter fileWriter;
         try {
             fileWriter = new FileWriter("src/main/java/com/example/tp_/Jouers.txt",true);
+            File myObj = new File("src/main/java/com/example/tp_/Jouers.txt");
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            if(!jouer_existe_deja) {
-                printWriter.append("\n" + HelloApplication.jouer_nom + " " + myjouer.getScore()+" "+myjouer.getBest_score());
-            }
-            else{
-            if(myjouer.getBest_score()>=myjouer.getScore())  printWriter.append("\n" + HelloApplication.jouer_nom + " " + myjouer.getScore()+" "+myjouer.getBest_score());
-            else  printWriter.append("\n" + HelloApplication.jouer_nom + " " + myjouer.getScore()+" "+myjouer.getScore());
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                jouer_infos=data.split(" ");
+                if(jouer_infos[0].equalsIgnoreCase(HelloApplication.jouer_nom)){
+                    printWriter.
+                    if(myjouer.getBest_score()>=myjouer.getScore())  printWriter.print(HelloApplication.jouer_nom + " " + myjouer.getScore()+" "+myjouer.getBest_score());
+                        else  printWriter.print(HelloApplication.jouer_nom + " " + myjouer.getScore()+" "+myjouer.getScore());
+                    printWriter.close();
+                    myReader.close();
+                    return; // parceque on veut pas lire la suite de le fichier
 
             }
-            printWriter.close();
+            }
+
+                printWriter.append(HelloApplication.jouer_nom + " " + myjouer.getScore()+" "+myjouer.getBest_score());
+                printWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }*/
+        List<String> lines;
+
+        try {
+            lines = Files.readAllLines(Path.of("src/main/java/com/example/tp_/Jouers.txt"));
+            System.out.println(lines.get(1));
+            System.out.println(jouer_existe_deja);
+            if(case_actuel==100) {
+                if (jouer_existe_deja) {
+                    if (myjouer.getBest_score() >= myjouer.getScore())
+                        lines.set(position_in_file, HelloApplication.jouer_nom + " " + myjouer.getBest_score());
+                    else
+                        lines.set(position_in_file, HelloApplication.jouer_nom + " " + myjouer.getScore() );
+                    Files.write(Path.of("src/main/java/com/example/tp_/Jouers.txt"), lines);
+
+                } else {
+                    PrintWriter printWriter = new PrintWriter(new FileWriter("src/main/java/com/example/tp_/Jouers.txt", true));
+                    printWriter.append("\n" + HelloApplication.jouer_nom + " " + myjouer.getScore());
+                    printWriter.close();
+                }
+            } // si on a arrive a la fin de la partie
+            else {
+                if(case_clicked){
+                if(jouer_existe_deja) {
+                    if (myjouer.getBest_score() >= myjouer.getScore())
+                        lines.set(position_in_file, HelloApplication.jouer_nom + " " + myjouer.getScore() + " " + myjouer.getBest_score()+" "+case_actuel);
+                    else
+                        lines.set(position_in_file, HelloApplication.jouer_nom + " " + myjouer.getScore() + " " + myjouer.getScore()+" "+case_actuel);
+                    Files.write(Path.of("src/main/java/com/example/tp_/Jouers.txt"), lines);
+                }
+                else {
+                    PrintWriter printWriter = new PrintWriter(new FileWriter("src/main/java/com/example/tp_/Jouers.txt", true));
+                    printWriter.append("\n" + HelloApplication.jouer_nom + " " + myjouer.getScore() + " " + myjouer.getBest_score()+" "+case_actuel);
+                    printWriter.close();
+                }} // esq le jouer a suspendu la partie et a clique sur la case distination
+                else {
+                    if(jouer_existe_deja) {
+                        if (myjouer.getBest_score() >= myjouer.getScore())
+                            lines.set(position_in_file, HelloApplication.jouer_nom + " " + myjouer.getScore() + " " + myjouer.getBest_score()+" "+previous_Case);
+                        else
+                            lines.set(position_in_file, HelloApplication.jouer_nom + " " + myjouer.getScore() + " " + myjouer.getScore()+" "+previous_Case);
+                        Files.write(Path.of("src/main/java/com/example/tp_/Jouers.txt"), lines);
+                    }
+                    else {
+                        PrintWriter printWriter = new PrintWriter(new FileWriter("src/main/java/com/example/tp_/Jouers.txt", true));
+                        printWriter.append("\n" + HelloApplication.jouer_nom + " " + myjouer.getScore() + " " + myjouer.getBest_score()+" "+previous_Case);
+                        printWriter.close();
+                    }
+                }
+            }
+
+
+
+            } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
+    }
 
 
 
-    }// TO DO : check the line in which the jouer will be written
+
+
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+       Read_jouer(LoginPage.continue_partie);
+        Creat_cases();
+        plateau.init_plateau();
+        Set_ButtonsEvents();
+
+        HelloApplication.mystage.setOnCloseRequest(we -> {
+            System.out.println("jouer_info_written");
+            write_jouer();
+        });
+
+    }
 
 
 }
