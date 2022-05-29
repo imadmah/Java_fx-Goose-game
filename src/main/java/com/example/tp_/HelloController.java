@@ -65,22 +65,27 @@ public class HelloController implements Initializable  {
                             case_actuel=Integer.parseInt(jouer_infos[3]);
                             Current_score.setText(jouer_infos[1]);
                             case_actuel_txt.setText(String.valueOf(case_actuel));
+                            myjouer=new Joueur(jouer_infos[0],Integer.parseInt(jouer_infos[1]),Integer.parseInt(jouer_infos[2]));
                         }
                         else{
                             Current_score.setText("0");
                             Best_src.setText(jouer_infos[1]);
+                            myjouer=new Joueur(jouer_infos[0],0,Integer.parseInt(jouer_infos[1]));
                         }
 
-                        myjouer=new Joueur(jouer_infos[0],Integer.parseInt(jouer_infos[1]),Integer.parseInt(jouer_infos[2]));
+
                         myReader.close();
+                        System.out.println("cscasd");
                         return; // parceque on veut pas lire la suite de le fichier
                         }
-                    position_in_file++;
+                    position_in_file++; // l'indice de line de jouer dans le ficher
                 }
+
+                System.out.println("dasdasdasdasdasdasd");
                 myjouer=new Joueur(HelloApplication.jouer_nom,0,0);
                     player_name.setText("Player's name : \n "+HelloApplication.jouer_nom);
-                    Best_src.setText(jouer_infos[2]);
-                    Current_score.setText(jouer_infos[1]);
+                    Best_src.setText("0");
+                    Current_score.setText("0");
 
 
                 myReader.close();
@@ -466,7 +471,7 @@ public class HelloController implements Initializable  {
             } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-    }
+    } // TO DO : enregistrer l'etat de plateau
 
 
 
