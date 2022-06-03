@@ -1,35 +1,17 @@
 package com.example.tp_;
 
-import javafx.event.ActionEvent;
-
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-
-import java.io.*;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Scanner;
-import org.controlsfx.control.PopOver;
-
-import java.io.IOException;
+import static com.example.tp_.Case_image_controller.launch_stage;
 
 public class Case_image extends Case {
+
     protected final String couleur = "ROSE";
     protected int index; // l'index de la case d'image
     protected Joueur joueur; // le joueur a la case d'image
 
     // le constructeur de la case de image
+    public Case_image() {
+    }
+
     public Case_image(int index, Joueur joueur) {
         this.index = index;
         this.joueur = joueur;
@@ -46,8 +28,11 @@ public class Case_image extends Case {
     }
 
     public int mouvement(int inter_index) {
+        launch_stage(); // LA METHODE STATIC DE CASE_IMAGE_CONTROLLER
+
         return inter_index;
     }
+
     public int mouvement(boolean reponse_juste) {
         System.out.print("La case " + this.getIndex() + " est une case image!");
         int new_index = this.getIndex();
@@ -84,12 +69,12 @@ public class Case_image extends Case {
     }
 
     // retourne vrai si le joueur est dans cette case //ca sert fl'affichage blk
-    public boolean occupe() { return this.joueur != null;}
+    public boolean occupe() {
+        return this.joueur != null;
+    }
 
     public String getCouleur() {
         return this.couleur;
     }
-    public void repondre_btn(ActionEvent actionEvent) throws IOException {
 
-    }
 }

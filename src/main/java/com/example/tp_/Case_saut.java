@@ -28,7 +28,7 @@ public class Case_saut extends Case {
     // retourne l'index de la case destination
     public int mouvement(int inter_index) {
         System.out.print("La case " + this.getIndex() + " est une case saut!");
-        int new_index = ThreadLocalRandom.current().nextInt(this.getIndex(), 99 + 1);
+        int new_index = ThreadLocalRandom.current().nextInt(this.getIndex(), 70 + 1);
         System.out.println(" Le joueur va atteindre la case :  " + new_index + ".");
         return new_index;
     }

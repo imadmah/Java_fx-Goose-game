@@ -1,7 +1,7 @@
 package com.example.tp_;
 
 public class Case_depart extends Case {
-    private   String couleur = "JAUNE";
+    private String couleur = "JAUNE";
     protected int index; // l'index de la case de depart
     protected Joueur joueur; // le joueur a la case de depart //to know wether this cell is occuped or not
 

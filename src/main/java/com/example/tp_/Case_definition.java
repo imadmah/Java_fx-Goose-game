@@ -22,6 +22,10 @@ public class Case_definition extends Case {
     }
 
     public int mouvement(int inter_index) {
+
+
+        // ici on change l'indice
+
         return inter_index;
     }
 

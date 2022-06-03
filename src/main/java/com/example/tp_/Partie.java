@@ -56,9 +56,9 @@ public class Partie {
             System.out.println(joueur.toString() + " est dans la case : " + index_actuel + ".");
             System.out.println("Le resultat de la lance des dés est : " + resultat);
             if (inter_index < taille_plateau - 1) { // 99
-               // System.out.println("Le joueur doit se deplacer premierement en cliquant sur la case :" + inter_index);
-               // System.out.println(" la case :" + inter_index + " est une case intermediaire de couleur "
-                        //+ this.getPlateau().getCase(inter_index).getCouleur());
+                // System.out.println("Le joueur doit se deplacer premierement en cliquant sur la case :" + inter_index);
+                // System.out.println(" la case :" + inter_index + " est une case intermediaire de couleur "
+                //+ this.getPlateau().getCase(inter_index).getCouleur());
                 index_destination = this.getPlateau().getCase(inter_index).mouvement(inter_index);
                 this.score = this.getPlateau().getCase(inter_index).score(this.score);
                 System.out.println("le score de joueur apres le parcours d'une case "
