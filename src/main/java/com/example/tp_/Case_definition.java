@@ -1,9 +1,9 @@
 package com.example.tp_;
 
 public class Case_definition extends Case {
-    protected final String couleur = "BLEU";
-    protected int index; // l'index de la case de definition
-    protected Joueur joueur; // le joueur a la case de definition
+    private  final String couleur = "BLEU";
+    private  int index; // l'index de la case de definition
+    private  Joueur joueur; // le joueur a la case de definition
 
     // le constructeur de la case de definition
     public Case_definition(int index, Joueur joueur) {
@@ -23,6 +23,7 @@ public class Case_definition extends Case {
 
     public int mouvement(int inter_index) {
 
+        Case_definiton_controller.launch_stage2(); // LA METHODE STATIC DE CASE_IMAGE_CONTROLLER
 
         // ici on change l'indice
 

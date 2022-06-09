@@ -1,9 +1,9 @@
 package com.example.tp_;
 
 public class Case_bonus extends Case {
-    protected final String couleur = "VERTE";
-    protected int index; // l'index de la case de bonus
-    protected Joueur joueur; // le joueur a la case de bonus
+    private  final String couleur = "VERTE";
+    private  int index; // l'index de la case de bonus
+    private  Joueur joueur; // le joueur a la case de bonus
 
     // le constructeur de la case de bonus
     public Case_bonus(int index, Joueur joueur) {

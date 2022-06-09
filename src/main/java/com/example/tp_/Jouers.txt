@@ -1,27 +1,7 @@
+ramy 50 50 41
+imadd 10 10 13
 
-jj 0 0 93
-cdc 70 70 92
+imad 40 40 102
 
-asd 10 10 28
-
-dada 20 0 9
-
-dasd 0 0 20
-
-ddddd 0 0 10
-jh 20 0 12
-vc 0 0 1
-sd 0 0 1
-21 0 0 1
-ds 0 0 1
-gd 0 0 1
-bfx 0 0 1
-dasdadas 10 10 17
-cxz 0 0 1
-
-sdas 0 0 1
-dsd 0 0 49
-uyfh 0 0 1
-dsa 0 0 1
-xc 0 0 1
-hg 0 0 1
+immad 10 0 18
+rammy 0 0 18

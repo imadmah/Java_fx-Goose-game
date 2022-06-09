@@ -11,14 +11,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.example.tp_.HelloController.case_actuel;
-import static com.example.tp_.HelloController.*;
+import static com.example.tp_.Game_page.case_actuel;
+import static com.example.tp_.Game_page.*;
 
 public class Case_image_controller implements Initializable {
     public TextField Answer;
@@ -33,7 +32,7 @@ public class Case_image_controller implements Initializable {
    static Stage stage;
 
 
-
+    //ON CHARGE DES IMAGES ALEATOIREMENT D'APRES LEUR FICHIER
     public void Charger_images(){
          image_chosen=  ThreadLocalRandom.current().nextInt(5);
 
@@ -119,13 +118,13 @@ public class Case_image_controller implements Initializable {
 
 
     }
-
+    // CHARGER STAGE DE CASE IMAGE
     static void launch_stage(){
 
         try {
             System.out.println("clicked");
              stage = new Stage();
-            FXMLLoader fxmlLoader2 = new FXMLLoader(HelloApplication.class.getResource("Case_image.fxml"));
+            FXMLLoader fxmlLoader2 = new FXMLLoader(Main.class.getResource("Case_image.fxml"));
             Scene scene = new Scene(fxmlLoader2.load());
             stage.setScene(scene);
             stage.setResizable(false);
@@ -135,48 +134,52 @@ public class Case_image_controller implements Initializable {
             e.printStackTrace();
         }
     }
+    //LA GESTION DES REPONSES
     public void Repondre(ActionEvent actionEvent) {
         if(image_chosen==0){
-            if(Answer.getText().equalsIgnoreCase("2")){ myjouer.setScore(myjouer.getScore()+20);
-                case_actuel=case_actuel+2;}
-            else myjouer.setScore(myjouer.getScore()-20);
+            if(Answer.getText().equalsIgnoreCase("2")){ myjouer.setScore(myjouer.getScore()+10);
+                case_actuel=case_actuel+2;
+                if (case_actuel > 100) case_actuel = 100 - (case_actuel - 100); //
+            }
 
 
         }
         if(image_chosen==1){
             if(Answer.getText().equalsIgnoreCase("2")) {
-                myjouer.setScore(myjouer.getScore()+20);
+                myjouer.setScore(myjouer.getScore()+10);
                 case_actuel=case_actuel+2;
+                if (case_actuel > 100) case_actuel = 100 - (case_actuel - 100);
             }
-            else myjouer.setScore(myjouer.getScore()-20);
-
-
         }
+
         if(image_chosen==2){
             if(Answer.getText().equalsIgnoreCase("4")) {
-                myjouer.setScore(myjouer.getScore()+20);
-                case_actuel=case_actuel+2;}
-            else myjouer.setScore(myjouer.getScore()-20);
+                myjouer.setScore(myjouer.getScore()+10);
+                case_actuel=case_actuel+2;
+                if (case_actuel > 100) case_actuel = 100 - (case_actuel - 100); }
+
 
 
         }
         if(image_chosen==3){
             if(Answer.getText().equalsIgnoreCase("1")) {
                 myjouer.setScore(myjouer.getScore()+20);
-                case_actuel=case_actuel+2;}
-            else myjouer.setScore(myjouer.getScore()-20);
+                case_actuel=case_actuel+2;
+                if (case_actuel > 100) case_actuel = 100 - (case_actuel - 100); }
 
 
         }
         if(image_chosen==4){
             if(Answer.getText().equalsIgnoreCase("3")) {
-                myjouer.setScore(myjouer.getScore()+20);
-                case_actuel=case_actuel+2;}
-            else myjouer.setScore(myjouer.getScore()-20);
+                myjouer.setScore(myjouer.getScore()+10);
+                case_actuel=case_actuel+2;
+                if (case_actuel > 100) case_actuel = 100 - (case_actuel - 100); }
 
 
         }
+
         stage.close();
+
 
 
 

@@ -1,9 +1,6 @@
 package com.example.tp_;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 class Plateau_jeu extends Plateau {
 
@@ -23,6 +20,8 @@ class Plateau_jeu extends Plateau {
 
         Set<Integer> set = new HashSet<>();    // l'ensemble des cases
         Random rand = new Random();
+        Vector<Integer> cases_bonus = new Vector<>();
+
         cases[0] = new Case_depart(0);    // la case de depart a pour index 0
 
         for (int i = 1; i < 99; i++) {
@@ -81,6 +80,8 @@ class Plateau_jeu extends Plateau {
             // 5 cases de type bonus
             for (int i = 0; i < 5; i++) {
                 int j = it.next();
+                cases_bonus.add(j);
+
                 indices_case_bonus[i] = j;
 
                 cases[j] = new Case_bonus(j + 1);
@@ -90,6 +91,9 @@ class Plateau_jeu extends Plateau {
             // 5 cases de type malus
             for (int i = 0; i < 5; i++) {
                 int j = it.next();
+                if (cases_bonus.contains(j - 2) || cases_bonus.contains(j + 2)) {
+                    continue;
+                }
                 indices_case_malus[i] = j;
 
                 cases[j] = new Case_malus(j + 1);

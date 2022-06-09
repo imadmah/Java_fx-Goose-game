@@ -1,9 +1,9 @@
 package com.example.tp_;
 
 public class Case_fin extends Case {
-    protected final String couleur = "NOIRE";
-    protected int index; // l'index de la case de fin
-    protected Joueur joueur; // le joueur a la case de fin
+    private final String couleur = "NOIRE";
+    private int index; // l'index de la case de fin
+    private Joueur joueur; // le joueur a la case de fin
 
     // le constructeur de la case de fin
     public Case_fin(int index, Joueur joueur) {

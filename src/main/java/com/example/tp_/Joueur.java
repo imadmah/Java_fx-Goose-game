@@ -52,13 +52,7 @@ public class Joueur {
         return nom;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public String getNom() {
-        return nom;
-    }
 
     public int getScore() {
         return score;
@@ -74,13 +68,7 @@ public class Joueur {
         this.case_actuelle = case_actuelle;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     public void setScore(int score) {
         this.score = score;

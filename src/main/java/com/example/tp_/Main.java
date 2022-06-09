@@ -1,17 +1,25 @@
 package com.example.tp_;
 
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class Main extends Application {
+    static String jouer_nom;
+    static Stage mystage;
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        mystage = stage;
+         Jeu Jouers = new Jeu(stage); // ON LANCE UN JEU
+    }
+
+
     public static void main(String[] args) {
-        // on cree le pleteau du jeu
-        Plateau_jeu plateau = new Plateau_jeu();
-        plateau.init_plateau();
-        // on definie le joueur de la partie
-        Joueur joueur = new Joueur("RAMY", plateau.getCase(0));
-
-        // on initialise une partie de jeu
-        Partie partie = new Partie(plateau, joueur);
-
-        // on joue la partie
-        partie.jouer();
+            launch();
     }
 }

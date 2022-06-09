@@ -4,9 +4,9 @@ import static com.example.tp_.Case_image_controller.launch_stage;
 
 public class Case_image extends Case {
 
-    protected final String couleur = "ROSE";
-    protected int index; // l'index de la case d'image
-    protected Joueur joueur; // le joueur a la case d'image
+    private final String couleur = "ROSE";
+    private int index; // l'index de la case d'image
+    private Joueur joueur; // le joueur a la case d'image
 
     // le constructeur de la case de image
     public Case_image() {

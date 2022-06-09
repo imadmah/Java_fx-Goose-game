@@ -3,10 +3,10 @@ package com.example.tp_;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Case_saut extends Case {
-    protected final String couleur = "ORANGE";
-    protected int index; // l'index de la case de saut
-    protected int contenu; // le contenu de la case saut
-    protected Joueur joueur; // le joueur a la case de saut
+    private final String couleur = "ORANGE";
+    private int index; // l'index de la case de saut
+    private int contenu; // le contenu de la case saut
+    private Joueur joueur; // le joueur a la case de saut
 
     // le constructeur de la case de saut
     public Case_saut(int index, int contenu, Joueur joueur) {
@@ -27,8 +27,9 @@ public class Case_saut extends Case {
 
     // retourne l'index de la case destination
     public int mouvement(int inter_index) {
+        int new_index=0;
         System.out.print("La case " + this.getIndex() + " est une case saut!");
-        int new_index = ThreadLocalRandom.current().nextInt(this.getIndex(), 70 + 1);
+        new_index =  ThreadLocalRandom.current().nextInt( 99);
         System.out.println(" Le joueur va atteindre la case :  " + new_index + ".");
         return new_index;
     }

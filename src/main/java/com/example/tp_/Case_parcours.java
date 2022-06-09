@@ -3,9 +3,9 @@ package com.example.tp_;
 import static com.example.tp_.Case_image_controller.launch_stage;
 
 public class Case_parcours extends Case {
-    protected String couleur = "BLANCHE";
-    protected int index; // l'index de la case de parcours
-    protected Joueur joueur; // le joueur a la case de parcours
+    private String couleur = "BLANCHE";
+    private int index; // l'index de la case de parcours
+    private Joueur joueur; // le joueur a la case de parcours
 
     // le constructeur de la case de parcours
     public Case_parcours(int index, Joueur joueur) {
@@ -24,7 +24,6 @@ public class Case_parcours extends Case {
 
     // retourne l'index de la case destination
     public int mouvement(int inter_index) {
-        launch_stage(); // LA METHODE STATIC DE CASE_IMAGE_CONTROLLER
 
         System.out.print("La case " + this.getIndex() + " est une case parcours!");
         int new_index = inter_index; // elle va rien faire.

@@ -19,22 +19,21 @@ public class LoginPage implements Initializable {
     TextField jouer_input;
     Scene myscene;
     @FXML
-    ChoiceBox choice_box;
+    private ChoiceBox choice_box;
     @FXML
     Label Best_src_ingame;
     static Boolean continue_partie = false;
 
 
-    // TO DO regler best score
+    // ON VERIFIE SI LE JOUEUR A INTRODUIT UN NOM SINON IL VA CHARGER UNE ANCIENNE PARTIE //
     public void nouvelle_partie(ActionEvent actionEvent) throws IOException {
-
         if (!jouer_input.getText().isBlank()) {
-            HelloApplication.jouer_nom = jouer_input.getText();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Game_page.fxml"));
+            Main.jouer_nom = jouer_input.getText();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Game_page.fxml"));
             myscene = new Scene(fxmlLoader.load());
-            HelloApplication.mystage.setScene(myscene);
+            Main.mystage.setScene(myscene);
 
-        } else {
+        } else { //SI TEXT IS BLANK UNE MESSAGE D'ERREUR APPARAIT
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Oublier d'entrer un nom");
             alert.setHeaderText("");
@@ -47,7 +46,8 @@ public class LoginPage implements Initializable {
             });
         }
     }
-
+    // ON CHARGE LES JOUERS D'APRES LE FICHIER (ICI UNE REMARQUE LA DIFFRENCE ENTRE UN JOUEUR QUI A TERMINE LA DERNIERE PARTIE JOUEE ET              //
+    // UN JOUEUR QUI N'A PAS C'EST LE CHAMP DE CASE DANS LE FICHIER C'EST COMME CA ON DISTENQUE ENTRE LES JOUERS ET ON AFFICHE SEULEMENT CES DERNIERS//
     public void load_players() {
 
         try {
@@ -70,19 +70,32 @@ public class LoginPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         load_players();
+        Read_best_score();
     }
-
+    //C'EST L'EVENT DE BUTTON CHARGER_PARTIE
     public void chrager_partie(ActionEvent actionEvent) {
-        HelloApplication.jouer_nom = (String) choice_box.getSelectionModel().getSelectedItem();
-        continue_partie = true;
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Game_page.fxml"));
+        Main.jouer_nom = (String) choice_box.getSelectionModel().getSelectedItem();
+        continue_partie = true; // POUR QUE ON CHARGE LE PLATEAU //
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Game_page.fxml"));
         try {
             myscene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HelloApplication.mystage.setScene(myscene);
+        Main.mystage.setScene(myscene);
 
 
+    }
+    // LA LECTURE DE MIELLEUR SCORE//
+    public void Read_best_score(){
+        File myObj = new File("src/main/java/com/example/tp_/Best_score.txt"); // LECTURE DE FICHIER DE JOUEUR//
+        try {
+            Scanner myReader = new Scanner(myObj);
+            String best_score = myReader.nextLine();
+
+            Best_src_ingame.setText(best_score);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

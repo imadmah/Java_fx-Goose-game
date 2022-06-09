@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tp_.HelloController">
+<AnchorPane fx:id="Root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="980.0" style="-fx-border-color: #addfa2; -fx-border-width: 4; -fx-border-radius: 7; -fx-background-radius: 7; -fx-background-color: #cfe2f0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tp_.Game_page">
     <children>
         <Label fx:id="case_actuel_txt" layoutX="203.0" layoutY="554.0" prefHeight="38.0" prefWidth="27.0" text="1">
             <font>
@@ -92,7 +92,7 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </Label>
-        <Label fx:id="Best_src" layoutX="884.0" layoutY="140.0" prefHeight="27.0" prefWidth="70.0" text=" 0" wrapText="true">
+        <Label fx:id="Best_src" layoutX="896.0" layoutY="139.0" prefHeight="27.0" prefWidth="70.0" text=" 0" wrapText="true">
             <font>
                 <Font name="System Bold" size="17.0" />
             </font>
@@ -129,5 +129,11 @@
                 <Font name="System Bold" size="17.0" />
             </font>
         </Label>
+      <Line endX="-45.721282958984375" endY="31.0" layoutX="325.0" layoutY="573.0" startX="-45.721282958984375" startY="-20.0999755859375" strokeWidth="3.0" />
+      <Label fx:id="Remarque" layoutX="361.0" layoutY="564.0" prefHeight="27.0" prefWidth="343.0" wrapText="true">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

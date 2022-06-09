@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tp_.Case_image_controller">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #cfe2f0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tp_.Case_image_controller">
     <children>
       <Line endX="17.000045776367188" endY="160.50001525878906" layoutX="149.0" layoutY="74.0" startX="17.000030517578125" startY="-74.0" />
       <Line endX="-26.0" endY="52.50001525878906" layoutX="367.0" layoutY="183.0" startX="-26.0" startY="-183.0" />
@@ -27,7 +27,7 @@
       </Label>
       <Label fx:id="Word" layoutX="332.0" layoutY="336.0" prefHeight="28.0" prefWidth="134.0" textAlignment="CENTER">
          <font>
-            <Font size="19.0" />
+            <Font name="System Bold" size="19.0" />
          </font></Label>
       <TextField fx:id="Answer" layoutX="505.0" layoutY="329.0" prefHeight="42.0" prefWidth="41.0" style="-fx-border-color: black; -fx-border-radius: 8;">
          <font>
